@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TourBase_Stage_1_2", "TourBase_Stage_1_2.csproj", "{096C1BC1-1132-42FE-9A00-7B569D14AF20}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{096C1BC1-1132-42FE-9A00-7B569D14AF20}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{096C1BC1-1132-42FE-9A00-7B569D14AF20}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{096C1BC1-1132-42FE-9A00-7B569D14AF20}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{096C1BC1-1132-42FE-9A00-7B569D14AF20}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {532457C9-4195-4292-89C5-DF85F21FA548}
+	EndGlobalSection
+EndGlobal
