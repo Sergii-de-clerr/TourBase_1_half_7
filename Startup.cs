@@ -9,6 +9,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+using TourBase_Stage_1_2.Models;
+using Microsoft.EntityFrameworkCore;
+
 namespace TourBase_Stage_1_2
 {
     public class Startup
@@ -23,6 +26,8 @@ namespace TourBase_Stage_1_2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connection = Configuration.GetConnectionString("DefaultConnection");
+            services.AddDbContext<TourBaseContext>(options => options.UseSqlServer(connection));
             services.AddControllersWithViews();
         }
 
@@ -50,7 +55,7 @@ namespace TourBase_Stage_1_2
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Tourists}/{action=Index}/{id?}");
             });
         }
     }

@@ -1,0 +1,36 @@
+﻿@model TourBase_Stage_1_2.Voucher
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Voucher</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.TakeOffDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.TakeOffDate)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tour)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tour.TourName)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Tourist)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Tourist.TouristName)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.VoucherId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
