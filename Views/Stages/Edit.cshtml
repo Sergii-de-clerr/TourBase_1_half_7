@@ -1,0 +1,49 @@
+﻿@model TourBase_Stage_1_2.Stage
+
+@{
+    ViewData["Title"] = "Виправити етап";
+}
+
+<h1>Виправити етап</h1>
+
+<h4>Етап</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="StageId" />
+            <div class="form-group">
+                <label asp-for="StageNumber" class="control-label"></label>
+                <input asp-for="StageNumber" class="form-control" />
+                <span asp-validation-for="StageNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TourId" class="control-label"></label>
+                <select asp-for="TourId" class="form-control" asp-items="ViewBag.TourName"></select>
+                <span asp-validation-for="TourId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TransportId" class="control-label"></label>
+                <select asp-for="TransportId" class="form-control" asp-items="ViewBag.TransportName"></select>
+                <span asp-validation-for="TransportId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="HotelId" class="control-label"></label>
+                <select asp-for="HotelId" class="form-control" asp-items="ViewBag.HotelName"></select>
+                <span asp-validation-for="HotelId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Зберегти" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Назад до таблиці турів</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

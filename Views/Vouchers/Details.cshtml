@@ -1,13 +1,13 @@
 ﻿@model TourBase_Stage_1_2.Voucher
 
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "Інформація про ваучер";
 }
 
-<h1>Details</h1>
+<h1>Інформація про ваучер</h1>
 
 <div>
-    <h4>Voucher</h4>
+    <h4>Ваучер</h4>
     <hr />
     <dl class="row">
         <dt class = "col-sm-2">
@@ -31,6 +31,6 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model.VoucherId">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Edit" asp-route-id="@Model.VoucherId">Виправити</a> |
+    <a asp-action="Index">Назад до таблиці туристів</a>
 </div>

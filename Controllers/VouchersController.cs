@@ -18,18 +18,19 @@ namespace TourBase_Stage_1_2.Controllers
             _context = context;
         }
 
-        // GET: Vouchers
+        //GET: Vouchers
         //public async Task<IActionResult> Index()
         //{
         //    var tourBaseContext = _context.Vouchers.Include(v => v.Tour).Include(v => v.Tourist);
         //    return View(await tourBaseContext.ToListAsync());
         //}
 
-        public async Task<IActionResult> Index(int? id)
+        public async Task<IActionResult> Index(int? id, string? name)
         {
             if (id == null)
-                return RedirectToAction("Tourists", "Index");
+                return RedirectToAction("Index", "Tourists");
             ViewBag.TouristId = id;
+            ViewBag.TouristName = name;
             var tourBaseContext = _context.Vouchers.Where(v => v.TouristId == id).Include(v => v.Tour).Include(v => v.Tourist);
             return View(await tourBaseContext.ToListAsync());
         }
@@ -55,7 +56,7 @@ namespace TourBase_Stage_1_2.Controllers
         }
 
         // GET: Vouchers/Create
-        public IActionResult Create()
+        public IActionResult Create(int touristid)
         {
             ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourName");
             ViewData["TouristId"] = new SelectList(_context.Tourists, "TouristId", "TouristName");
@@ -67,17 +68,20 @@ namespace TourBase_Stage_1_2.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("VoucherId,TakeOffDate,TouristId,TourId")] Voucher voucher)
+        public async Task<IActionResult> Create(int touristid, [Bind("VoucherId,TakeOffDate,TouristId,TourId")] Voucher voucher)
         {
+            voucher.TouristId = touristid;
             if (ModelState.IsValid)
             {
                 _context.Add(voucher);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Vouchers", new { id = touristid });
             }
-            ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId", voucher.TourId);
-            ViewData["TouristId"] = new SelectList(_context.Tourists, "TouristId", "TouristId", voucher.TouristId);
-            return View(voucher);
+            //ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId", voucher.TourId);
+            //ViewData["TouristId"] = new SelectList(_context.Tourists, "TouristId", "TouristId", voucher.TouristId);
+            //return View(voucher);
+            return RedirectToAction("Index", "Vouchers", new { id = touristid });
         }
 
         // GET: Vouchers/Edit/5
@@ -130,8 +134,8 @@ namespace TourBase_Stage_1_2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId", voucher.TourId);
-            ViewData["TouristId"] = new SelectList(_context.Tourists, "TouristId", "TouristId", voucher.TouristId);
+            ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourName", voucher.TourId);
+            ViewData["TouristId"] = new SelectList(_context.Tourists, "TouristId", "TouristName", voucher.TouristId);
             return View(voucher);
         }
 

@@ -9,63 +9,63 @@ using TourBase_Stage_1_2;
 
 namespace TourBase_Stage_1_2.Controllers
 {
-    public class TouristsController : Controller
+    public class ToursController : Controller
     {
         private readonly TourBaseContext _context;
 
-        public TouristsController(TourBaseContext context)
+        public ToursController(TourBaseContext context)
         {
             _context = context;
         }
 
-        // GET: Tourists
+        // GET: Tours
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Tourists.ToListAsync());
+            return View(await _context.Tours.ToListAsync());
         }
 
-        // GET: Tourists/Details/5
-        public async Task<IActionResult> Details(int? id, string? name)
+        // GET: Tours/Details/5
+        public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var tourist = await _context.Tourists
-                .FirstOrDefaultAsync(m => m.TouristId == id);
-            if (tourist == null)
+            var tour = await _context.Tours
+                .FirstOrDefaultAsync(m => m.TourId == id);
+            if (tour == null)
             {
                 return NotFound();
             }
 
-            //return View(tourist);
-            return RedirectToAction("Index", "Vouchers", new { id = tourist.TouristId, name = tourist.TouristName });
+            //return View(tour);
+            return RedirectToAction("Index", "Stages", new { id = tour.TourId, name = tour.TourName });
         }
 
-        // GET: Tourists/Create
+        // GET: Tours/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Tourists/Create
+        // POST: Tours/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("TouristId,TouristName,BirthDate,EmailAdress")] Tourist tourist)
+        public async Task<IActionResult> Create([Bind("TourId,TourName,DurationInDays,Info")] Tour tour)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(tourist);
+                _context.Add(tour);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(tourist);
+            return View(tour);
         }
 
-        // GET: Tourists/Edit/5
+        // GET: Tours/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace TourBase_Stage_1_2.Controllers
                 return NotFound();
             }
 
-            var tourist = await _context.Tourists.FindAsync(id);
-            if (tourist == null)
+            var tour = await _context.Tours.FindAsync(id);
+            if (tour == null)
             {
                 return NotFound();
             }
-            return View(tourist);
+            return View(tour);
         }
 
-        // POST: Tourists/Edit/5
+        // POST: Tours/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TouristId,TouristName,BirthDate,EmailAdress")] Tourist tourist)
+        public async Task<IActionResult> Edit(int id, [Bind("TourId,TourName,DurationInDays,Info")] Tour tour)
         {
-            if (id != tourist.TouristId)
+            if (id != tour.TourId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace TourBase_Stage_1_2.Controllers
             {
                 try
                 {
-                    _context.Update(tourist);
+                    _context.Update(tour);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!TouristExists(tourist.TouristId))
+                    if (!TourExists(tour.TourId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace TourBase_Stage_1_2.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(tourist);
+            return View(tour);
         }
 
-        // GET: Tourists/Delete/5
+        // GET: Tours/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,30 +124,30 @@ namespace TourBase_Stage_1_2.Controllers
                 return NotFound();
             }
 
-            var tourist = await _context.Tourists
-                .FirstOrDefaultAsync(m => m.TouristId == id);
-            if (tourist == null)
+            var tour = await _context.Tours
+                .FirstOrDefaultAsync(m => m.TourId == id);
+            if (tour == null)
             {
                 return NotFound();
             }
 
-            return View(tourist);
+            return View(tour);
         }
 
-        // POST: Tourists/Delete/5
+        // POST: Tours/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var tourist = await _context.Tourists.FindAsync(id);
-            _context.Tourists.Remove(tourist);
+            var tour = await _context.Tours.FindAsync(id);
+            _context.Tours.Remove(tour);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool TouristExists(int id)
+        private bool TourExists(int id)
         {
-            return _context.Tourists.Any(e => e.TouristId == id);
+            return _context.Tours.Any(e => e.TourId == id);
         }
     }
 }

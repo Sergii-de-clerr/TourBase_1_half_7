@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 #nullable disable
 
@@ -13,6 +14,9 @@ namespace TourBase_Stage_1_2
         }
 
         public int HotelId { get; set; }
+
+        [Required(ErrorMessage = "Це поле повинно бути заповнене")]
+        [Display(Name = "Назва готелю")]
         public string HotelName { get; set; }
         public string CategoryOfTheService { get; set; }
         public int? CityId { get; set; }
