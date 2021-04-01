@@ -1,0 +1,73 @@
+﻿@{
+    ViewData["Title"] = "Діаграми";
+}
+
+<div class="container">
+    <div id="chart1"></div>
+    <div id="chart2"></div>
+</div>
+@section scripts{
+    <script type "text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            $.get('/api/Charts/JsonTours', function (JsonTours) {
+                data = google.visualization.arrayToDataTable(JsonTours, false);
+                var option = {
+                    title: "Співвідношення кількості ваучерів та турів",
+                    width: 500,
+                    height: 400
+                };
+                chart = new google.visualization.PieChart(document.getElementById('chart1'));
+                chart.draw(data, option);
+            })
+        }
+    </script>
+    <script type "text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            $.get('/api/Charts/JsonTourists', function (JsonTourists) {
+                data = google.visualization.arrayToDataTable(JsonTourists, false);
+                var option = {
+                    title: "Співвідношення кількості ваучерів та турів",
+                    width: 500,
+                    height: 400
+                };
+                chart = new google.visualization.PieChart(document.getElementById('chart2'));
+                chart.draw(data, option);
+            })
+        }
+    </script>
+}
+
+@*<div class="container">
+    <div id="chart1"></div>
+</div>
+@section scripts{
+    <script type "text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script>
+        google.charts.load('current', { 'packages': ['corechart'] });
+        google.charts.setOnLoadCallback(drawChart);
+
+        function drawChart() {
+
+            $.get('/api/Charts/JsonTourists', function (JsonTourists) {
+                data = google.visualization.arrayToDataTable(JsonTourists, false);
+                var option = {
+                    title: "Співвідношення кількості ваучерів та турів",
+                    width: 500,
+                    height: 400
+                };
+                chart = new google.visualization.PieChart(document.getElementById('chart1'));
+                chart.draw(data, option);
+            })
+        }
+    </script>
+}*@

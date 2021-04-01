@@ -18,12 +18,27 @@ namespace TourBase_Stage_1_2.Controllers
             _logger = logger;
         }
 
+        public IActionResult Charts()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult TouristsDeleteError()
+        {
+            return View();
+        }
+
+        public IActionResult ToursDeleteError()
         {
             return View();
         }

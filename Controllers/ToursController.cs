@@ -137,8 +137,60 @@ namespace TourBase_Stage_1_2.Controllers
         // POST: Tours/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        //public async Task<IActionResult> DeleteConfirmed(int id)
+        //{
+        //    var tour = await _context.Tours.FindAsync(id);
+        //    _context.Tours.Remove(tour);
+        //    await _context.SaveChangesAsync();
+        //    return RedirectToAction(nameof(Index));
+        //}
+
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            var tourBaseContext = _context.Stages.Where(s => s.TourId == id).Include(s => s.Hotel).Include(s => s.Tour).Include(s => s.Transport);
+            var tourBaseContextV = _context.Vouchers.Where(v => v.TourId == id).Include(v => v.Tour).Include(v => v.Tourist);
+            var cont = tourBaseContext.ToList();
+            var contV = tourBaseContextV.ToList();
+            if (cont.Count == 0 && contV.Count == 0)
+            {
+                var tour = await _context.Tours.FindAsync(id);
+                _context.Tours.Remove(tour);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            else
+            {
+                return RedirectToAction("ToursDeleteError", "Home");
+            }
+        }
+
+        public async Task<IActionResult> DeleteKask(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var tour = await _context.Tours
+                .FirstOrDefaultAsync(m => m.TourId == id);
+            if (tour == null)
+            {
+                return NotFound();
+            }
+
+            return View(tour);
+        }
+
+        // POST: Tours/Delete/5
+        [HttpPost, ActionName("DeleteKask")]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> DeleteKaskConfirmed(int id)
+        {
+            var tourBaseContext = _context.Stages.Where(s => s.TourId == id).Include(s => s.Hotel).Include(s => s.Tour).Include(s => s.Transport);
+            var tourBaseContextV = _context.Vouchers.Where(v => v.TourId == id).Include(v => v.Tour).Include(v => v.Tourist);
+            var cont = tourBaseContext.ToList();
+            var contV = tourBaseContextV.ToList();
             var tour = await _context.Tours.FindAsync(id);
             _context.Tours.Remove(tour);
             await _context.SaveChangesAsync();

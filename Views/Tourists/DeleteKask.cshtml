@@ -1,0 +1,39 @@
+﻿@model TourBase_Stage_1_2.Tourist
+
+@{
+    ViewData["Title"] = "Каскадне видалення туриста";
+}
+
+<h1>Каскадне видалення туриста</h1>
+
+<h3>Ви впевненні, що хочете видалити цього туриста?</h3>
+<div>
+    <h4>Турист</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TouristName)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TouristName)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.BirthDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BirthDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.EmailAdress)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.EmailAdress)
+        </dd>
+    </dl>
+
+    <form asp-action="DeleteKask">
+        <input type="hidden" asp-for="TouristId" />
+        <input type="submit" value="Каскадно видалити" class="btn btn-danger" /> |
+        <a asp-action="Index">Назад до таблиці туристів</a>
+    </form>
+</div>

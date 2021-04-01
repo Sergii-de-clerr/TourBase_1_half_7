@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<TourBase_Stage_1_2.Tour>
 
 @{
-    ViewData["Title"] = "Туристи";
+    ViewData["Title"] = "Тури";
 }
 
-<h1>Туристи</h1>
+<h1>Тури</h1>
 
 <p>
     <a asp-action="Create">Створити новий тур</a>
@@ -25,23 +25,25 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TourName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DurationInDays)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Info)
-            </td>
-            <td>
-                @*<a asp-action="Edit" asp-route-id="@item.TourId">Edit</a> |*@
-                <a asp-action="Details" asp-route-id="@item.TourId">Подивитися етапи даного туру</a> |
-                <a asp-action="Delete" asp-route-id="@item.TourId">Видалити тур</a>
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TourName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DurationInDays)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Info)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.TourId">Виправити тур</a> |
+                    <a asp-action="Details" asp-route-id="@item.TourId">Подивитися етапи даного туру</a> |
+                    <a asp-action="Delete" asp-route-id="@item.TourId">Видалити тур</a> |
+                    <a asp-action="DeleteKask" asp-route-id="@item.TourId">Каскадно видалити тур</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

@@ -1,12 +1,12 @@
 ﻿@model TourBase_Stage_1_2.Tour
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Виправити тур";
 }
 
-<h1>Edit</h1>
+<h1>Виправити тур</h1>
 
-<h4>Tour</h4>
+<h4>Тур</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -29,14 +29,14 @@
                 <span asp-validation-for="Info" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Зберегти" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Назад до таблиці турів</a>
 </div>
 
 @section Scripts {
