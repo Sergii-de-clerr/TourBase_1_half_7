@@ -70,6 +70,24 @@ namespace TourBase_Stage_1_2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(int touristid, [Bind("VoucherId,TakeOffDate,TouristId,TourId")] Voucher voucher)
         {
+            var tourBaseContextV = _context.Vouchers.Include(v => v.Tour).Include(v => v.Tourist).ToList();
+            var tourBaseContextT = _context.Tours.ToList();
+            Dictionary<int, int> TOURS = new Dictionary<int, int>();
+            foreach (var a in tourBaseContextT)
+            {
+                TOURS.Add(a.TourId, (int)a.DurationInDays);
+            }
+            DateTime t;
+            foreach (var a in tourBaseContextV)
+            {
+                t = Convert.ToDateTime(value: a.TakeOffDate);
+                t = t.AddDays(TOURS[(int)voucher.TourId]);
+                if ((voucher.TakeOffDate > a.TakeOffDate) && (voucher.TakeOffDate < t))
+                {
+                    ModelState.AddModelError("TakeOffDate", "Ви в турі в цей час");
+                }
+            }
+
             voucher.TouristId = touristid;
             if (ModelState.IsValid)
             {
@@ -78,10 +96,10 @@ namespace TourBase_Stage_1_2.Controllers
                 //return RedirectToAction(nameof(Index));
                 return RedirectToAction("Index", "Vouchers", new { id = touristid });
             }
-            //ViewData["TourId"] = new SelectList(_context.Tours, "TourId", "TourId", voucher.TourId);
-            //ViewData["TouristId"] = new SelectList(_context.Tourists, "TouristId", "TouristId", voucher.TouristId);
-            //return View(voucher);
-            return RedirectToAction("Index", "Vouchers", new { id = touristid });
+            ViewData["TourId"] = new SelectList(_context.Tours, "TourName", "TourName", voucher.TourId);
+            ViewData["TouristId"] = new SelectList(_context.Tourists, "TouristName", "TouristName", voucher.TouristId);
+            return View(voucher);
+            //return RedirectToAction("Create", "Vouchers", new { id = touristid });
         }
 
         // GET: Vouchers/Edit/5

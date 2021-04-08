@@ -87,6 +87,12 @@ namespace TourBase_Stage_1_2.Controllers
                 }
             }
 
+            DateTime t = Convert.ToDateTime("01.01.1920");
+            if (tourist.BirthDate < t)
+            {
+                ModelState.AddModelError("BirthDate", "Некоректний вік");
+            }
+
             if (ModelState.IsValid)
             {
                 _context.Add(tourist);
@@ -119,6 +125,20 @@ namespace TourBase_Stage_1_2.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("TouristId,TouristName,BirthDate,EmailAdress")] Tourist tourist)
         {
+            if (string.IsNullOrEmpty(tourist.EmailAdress))
+            {
+                ModelState.AddModelError("EmailAdress", "Це поле повинно бути заповнене");
+            }
+            else
+            {
+                Regex regex = new Regex(@"^([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$", RegexOptions.CultureInvariant | RegexOptions.Singleline);
+                bool isValidEmail = regex.IsMatch(tourist.EmailAdress);
+                if (!isValidEmail)
+                {
+                    ModelState.AddModelError("EmailAdress", "Невірний запис e-mail адреси");
+                }
+            }
+
             if (id != tourist.TouristId)
             {
                 return NotFound();
@@ -258,8 +278,9 @@ namespace TourBase_Stage_1_2.Controllers
                                 else
                                 {
                                     newcat = new Tourist();
-                                    newcat.TouristName = worksheet.Name;
-                                    //newcat.Info = "from EXCEL";
+                                    newcat.TouristName = worksheet.Cell(1, 1).Value.ToString();
+                                    newcat.BirthDate = Convert.ToDateTime(worksheet.Cell(1, 2).Value);
+                                    newcat.EmailAdress = worksheet.Cell(1, 3).Value.ToString();
                                     //додати в контекст
                                     _context.Tourists.Add(newcat);
                                 }
@@ -269,8 +290,11 @@ namespace TourBase_Stage_1_2.Controllers
                                     try
                                     {
                                         Voucher voucher = new Voucher();
-                                        voucher.TakeOffDate = Convert.ToDateTime(row.Cell(3).Value);
-                                        voucher.TourId = Convert.ToInt32(row.Cell(4).Value);
+                                        voucher.TakeOffDate = Convert.ToDateTime(row.Cell(2).Value);
+                                        var tourBaseContextT = _context.Tours.Where(v => v.TourName == row.Cell(3).Value.ToString()).ToList();
+                                        voucher.TourId = tourBaseContextT[0].TourId;
+                                        voucher.TouristId = newcat.TouristId;
+                                        voucher.Tour = tourBaseContextT[0];
                                         voucher.Tourist = newcat;
                                         _context.Vouchers.Add(voucher);
                                         //у разі наявності автора знайти його, у разі відсутності - додати

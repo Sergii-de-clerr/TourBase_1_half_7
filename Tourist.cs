@@ -23,7 +23,7 @@ namespace TourBase_Stage_1_2
         [Display(Name = "Дата народження")]
         public DateTime? BirthDate { get; set; }
 
-        //[Required(ErrorMessage = "Це поле повинно бути заповнене")]
+        [Required(ErrorMessage = "Це поле повинно бути заповнене")]
         [Display(Name = "Поштова адресса")]
         public string EmailAdress { get; set; }
 
