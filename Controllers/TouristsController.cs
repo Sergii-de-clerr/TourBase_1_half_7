@@ -260,6 +260,11 @@ namespace TourBase_Stage_1_2.Controllers
                 {
                     using (var stream = new FileStream(fileExcel.FileName, FileMode.Create))
                     {
+                        var tourBaseContextTourist = _context.Tourists.ToList();
+                        foreach (var t in tourBaseContextTourist)
+                        {
+                            await DeleteKask(t.TouristId);
+                        }
                         await fileExcel.CopyToAsync(stream);
                         using (XLWorkbook workBook = new XLWorkbook(stream, XLEventTracking.Disabled))
                         {
